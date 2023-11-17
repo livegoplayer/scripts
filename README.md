@@ -1,8 +1,8 @@
-## Ê¹ÓÃ·½Ê½
+## ä½¿ç”¨æ–¹å¼
 
-1. ÏÂÔØ https://github.com/Akegarasu/lora-scripts
+ä¸‹è½½ https://github.com/Akegarasu/lora-scripts
 git clone --recurse-submodules https://github.com/Akegarasu/lora-scripts
 
-2. ËµÃ÷
-install-qinglong.sh ÊÇ¼æÈİÇàÁúÑµÁ·½Å±¾ + AkegarasuÑµÁ·½Å±¾ + https://github.com/bmaltais/kohya_ss µÄ¼æÈİ°²×°ÃüÁîsh£¬ĞèÒªÌİ×Ó
-extract_lora_from_models.ps1 ÊÇ½â¾öwebui supermerger ²î·ÖÄ£ĞÍÖÆ×÷µÄÒ»¸öÊ¾Àı½Å±¾£¬Ê¹ÓÃÖ®Ç°ĞèÒªÄã°²×°Akegarasu/lora-scriptsµÄ±Ø±¸²å¼ş£¬¼´³õÊ¼»¯venv
+è¯´æ˜
+install-qinglong.sh æ˜¯å…¼å®¹é’é¾™è®­ç»ƒè„šæœ¬ + Akegarasuè®­ç»ƒè„šæœ¬ + https://github.com/bmaltais/kohya_ss çš„å…¼å®¹å®‰è£…å‘½ä»¤shï¼Œéœ€è¦æ¢¯å­
+extract_lora_from_models.ps1 æ˜¯è§£å†³webui supermerger å·®åˆ†æ¨¡å‹åˆ¶ä½œçš„ä¸€ä¸ªç¤ºä¾‹è„šæœ¬ï¼Œä½¿ç”¨ä¹‹å‰éœ€è¦ä½ å®‰è£…Akegarasu/lora-scriptsçš„å¿…å¤‡æ’ä»¶ï¼Œå³åˆå§‹åŒ–venv
