@@ -14,7 +14,7 @@ tokenizer="lmsys/vicuna-7b-v1.5" # huggingface模型repoID || 本地缓存目录
 
 image_folder="/ext/train/train11" #  input images path | 图片输入路径
 
-output_folder="/ext/train/train11" # 输出目录 | 如果不指定输出目录，则输出到图片目录
+output_folder="/ext/train/train11_txt" # 输出目录 | 如果不指定输出目录，则输出到图片目录
 
 with_sub_dir=1
 

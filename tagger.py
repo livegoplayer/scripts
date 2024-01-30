@@ -77,6 +77,8 @@ remove_tags = [
         'the overall ambiance of the image suggests ',
         'The overall ambiance of the image suggests ',
         'the overall ambiance of the image is ',
+        'A digital artwork of ',
+        'a digital artwork of '
 ]
 
 first_single_spliter = [
