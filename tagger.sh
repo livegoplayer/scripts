@@ -8,13 +8,13 @@ export no_proxy="localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16"
 
 # tagger script by @milk
 # Train data path
-model_dir="/ext/CogVLM/models/cogagent-vqa-hf" # model dir path | 本地模型文件夹路�?
+model_dir="/ext/CogVLM/models/cogagent-vqa-hf" # model dir path | 鏈湴妯″瀷鏂囦欢澶硅矾寰?
 
-tokenizer="lmsys/vicuna-7b-v1.5" # huggingface模型repoID || 本地缓存目录,本地没缓存就不用�?
+tokenizer="lmsys/vicuna-7b-v1.5" # huggingface妯″瀷repoID || 鏈湴缂撳瓨鐩綍,鏈湴娌＄紦瀛樺氨涓嶇敤鏀?
 
-image_folder="/ext/train/train11" #  input images path | 图片输入路径
+image_folder="/ext/train/train11" #  input images path | 鍥剧墖杈撳叆璺緞
 
-output_folder="/ext/train/train11_txt" # 输出目录 | 如果不指定输出目录，则输出到图片目录
+output_folder="/ext/train/train11_txt" # 杈撳嚭鐩綍 | 濡傛灉涓嶆寚瀹氳緭鍑虹洰褰曪紝鍒欒緭鍑哄埌鍥剧墖鐩綍
 
 with_sub_dir=1
 
