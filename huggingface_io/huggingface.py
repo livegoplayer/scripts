@@ -6,14 +6,14 @@ from huggingface_hub.hf_api import RepoFile, RepoFolder
 import os
 from cryptography.fernet import Fernet
 
-os.environ['NO_PROXY'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16,  mirrors.cloud.aliyuncs.com, hf-mirror.com,  lfs.huggingface.co, *.amazonaws.com, *.s3-accelerate.amazonaws.com, hf-hub-lfs-us-east-1.s3-accelerate.amazonaws.com'
-# os.environ["HTTP_PROXY"] = ""
-# os.environ["HTTPS_PROXY"] = ""
+
 
 import re
 import json
 from datetime import datetime
-
+os.environ['NO_PROXY'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16,  mirrors.cloud.aliyuncs.com, hf-mirror.com,  lfs.huggingface.co, *.amazonaws.com, *.s3-accelerate.amazonaws.com, hf-hub-lfs-us-east-1.s3-accelerate.amazonaws.com'
+# os.environ["HTTP_PROXY"] = ""
+# os.environ["HTTPS_PROXY"] = ""
 # Specify the mirror URL
 mirror_url = "https://hf-mirror.com"
 
