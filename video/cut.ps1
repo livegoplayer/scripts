@@ -1,7 +1,7 @@
-$input_folder = "F:\mp4\11"
+$input_folder = "F:\mp4\10"
 $output_folder = ""
-$start_time = "00:00:26"
-$end_time = "00:03:27"
+$start_time = "00:00:16"
+$end_time = "00:03:54"
 
 # Check if input folder exists
 if (!(Test-Path $input_folder -PathType Container)) {
