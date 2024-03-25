@@ -1,9 +1,16 @@
+import os
+
+mirror_url = "https://hf-mirror.com"
+os.environ['HF_ENDPOINT'] = mirror_url
+os.environ['NO_PROXY'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16,  mirrors.cloud.aliyuncs.com, hf-mirror.com,  lfs.huggingface.co, *.amazonaws.com, *.s3-accelerate.amazonaws.com, hf-hub-lfs-us-east-1.s3-accelerate.amazonaws.com'
+os.environ["HTTP_PROXY"] = ""
+os.environ["HTTPS_PROXY"] = ""
+
 import subprocess
 import json
 from huggingface_hub import HfApi
 from huggingface_hub.utils import HfHubHTTPError, RepositoryNotFoundError, RevisionNotFoundError
 from huggingface_hub.hf_api import RepoFile, RepoFolder
-import os
 from cryptography.fernet import Fernet
 
 
@@ -11,11 +18,8 @@ from cryptography.fernet import Fernet
 import re
 import json
 from datetime import datetime
-os.environ['NO_PROXY'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16,  mirrors.cloud.aliyuncs.com, hf-mirror.com,  lfs.huggingface.co, *.amazonaws.com, *.s3-accelerate.amazonaws.com, hf-hub-lfs-us-east-1.s3-accelerate.amazonaws.com'
-# os.environ["HTTP_PROXY"] = ""
-# os.environ["HTTPS_PROXY"] = ""
+
 # Specify the mirror URL
-mirror_url = "https://hf-mirror.com"
 
 raw_url = "https://huggingface.co"
 
@@ -74,9 +78,7 @@ def login(init=False):
             print("无效的操作编号，请重新输入")
 
     access_token = load_access_token()
-    os.environ['HF_ENDPOINT'] = mirror_url
     subprocess.run(["huggingface-cli", "login", "--token", access_token], capture_output=True, text=True)
-    os.environ['HF_ENDPOINT'] = ''
 
     return access_token
 
@@ -102,9 +104,7 @@ def makesure_login(init=False):
 
 
 def check_login():
-    os.environ['HF_ENDPOINT'] = mirror_url
     result = subprocess.run(["huggingface-cli", "whoami"], capture_output=True, text=True)
-    os.environ['HF_ENDPOINT'] = ""
 
     if result.returncode == 0:
         return True, result.stdout.split("\n")[0]
@@ -573,18 +573,7 @@ def main():
         else:
             print("无效的操作编号，请重新输入")
 
-# def test():
-#     os.environ["HTTP_PROXY"] = ""
-#     os.environ["HTTPS_PROXY"] = ""
-#     mirror_url = "https://hf-mirror.com"
-#     os.environ['HF_ENDPOINT'] = mirror_url
-#     token = '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' #my token
-#     api = HfApi(endpoint=mirror_url, token=token) 
-#     repo_id = 'xjyplayer/your-repo-name4' # my private repo
-#     api.upload_file(repo_id=repo_id, path_or_fileobj='8x_NMKD-Superscale_150000_G.pth', path_in_repo="test/8x_NMKD-Superscale_150000_G.pth", commit_message="11", token=token)
-
 if __name__ == "__main__":
-
     main()
 
 
