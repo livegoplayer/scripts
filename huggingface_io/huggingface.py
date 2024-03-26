@@ -65,7 +65,7 @@ def login(init=False):
         print("检测到你是第一次登录，请选择模式(这个页面只会显示一次，如果想要再次进入请删除脚本目录下的access_token.json)：")
         print("1. 登录自己的access_token(可以登录huggingface设置里面新建一个，这样的话管理的就是你自己的账号)")
         print("2. 使用公共账号(程序作者使用小号创建的access_token,宗旨是让大家一起管理这个账号)")
-        choice = input("请输入你的选择")
+        choice = input("请输入你的选择：")
         if choice == "1":
             access_token = input("请输入您的 AccessToken: ")
             save_access_token(access_token)
