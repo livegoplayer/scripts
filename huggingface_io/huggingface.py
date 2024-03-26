@@ -2,8 +2,8 @@ import os
 
 mirror_url = "https://hf-mirror.com"
 os.environ['HF_ENDPOINT'] = mirror_url
-os.environ['NO_PROXY'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16, mirrors.cloud.aliyuncs.com, hf-mirror.com, lfs.huggingface.co, .s3-accelerate.amazonaws.com'
-os.environ['no_proxy'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16, mirrors.cloud.aliyuncs.com, hf-mirror.com, lfs.huggingface.co, .s3-accelerate.amazonaws.com'
+os.environ['NO_PROXY'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16, mirrors.cloud.aliyuncs.com, hf-mirror.com, lfs.huggingface.co, .s3-accelerate.amazonaws.com, .hf-mirror.com'
+os.environ['no_proxy'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16, mirrors.cloud.aliyuncs.com, hf-mirror.com, lfs.huggingface.co, .s3-accelerate.amazonaws.com, .hf-mirror.com'
 # os.environ["HTTP_PROXY"] = ""
 # os.environ["HTTPS_PROXY"] = ""
 
