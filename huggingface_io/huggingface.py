@@ -241,7 +241,7 @@ def select_current_project(start_num, end_num):
                     print("无效的项目类型编号，请重新输入")
                     return
                 current_project_repo_type = repo_type
-                show_project_details()
+            show_project_details()
             break
         else:
             print("无效的项目编号，请重新选择。")
