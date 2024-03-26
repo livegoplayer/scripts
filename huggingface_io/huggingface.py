@@ -343,9 +343,9 @@ def download_files(repo_id):
     successful_downloads = 0
     failed_downloads = 0
 
-    default_folder = get_default_folder()
-
     while True:
+        default_folder = get_default_folder()
+
         print("\n请输入要下载的文件路径，多个文件请使用逗号分隔, 回车返回上一级")
         file_paths_input = input("请输入文件路径: ")
         if len(file_paths_input) == 0:
@@ -473,8 +473,9 @@ def is_own_project(repo_id):
     return repo_id in id_mapping
 
 def create_repository():
-    global user, api
+    global user, api, id_mapping, repo_types
     makesure_login()
+    repo_type=None
     try:
         """添加一个新项目."""
         print("\n请选择要创建的项目类型:")
@@ -524,6 +525,9 @@ def create_repository():
     # 检查是否成功创建存储库
     if url:
         print(f"存储库 {repo_id} 创建成功！地址为：" + url)
+        id = get_or_create_id(repo_id)
+        id_mapping[repo_id] = id
+        repo_types[repo_id] = repo_type
     else:
         print("存储库创建失败，请检查权限或存储库是否已存在。")
     return repo_id
