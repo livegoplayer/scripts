@@ -351,7 +351,7 @@ def download_files(repo_id):
         if len(file_paths_input) == 0:
             return
         
-        folder_path = input(f"请输入文件夹路径，按回车使用{default_folder}：")
+        folder_path = input(f"请输入本地文件夹路径，按回车使用{default_folder}：")
 
         if folder_path == "":
             folder_path = default_folder
@@ -363,6 +363,7 @@ def download_files(repo_id):
 
         # Prompt user to place downloaded files in corresponding folders
         user_choice = input("是否把下载的文件放到对应的文件夹？(Y/n)：")
+        dir_obj = False
         if user_choice.lower() != 'n':
             dir_obj = True
 
