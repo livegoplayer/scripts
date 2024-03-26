@@ -1,2 +1,2 @@
-subprocess
 cryptography
+huggingface-hub
