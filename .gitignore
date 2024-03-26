@@ -1,2 +1,9 @@
 /huggingface_io/access_token.json
 /huggingface_io/config.json
+/.idea/.gitignore
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/scripts.iml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml
