@@ -9,7 +9,7 @@
 `python ./huggingface.py`
 
 ### 说明
-这个脚本用来无梯子接入huggingface， 经过本人以及huggingface-hub开发者的一些debug处理之后，该脚本得以独立运行
+这个脚本用来无梯子接入huggingface，实现上传和下载，主要是上传， 经过本人以及huggingface-hub开发者的一些debug处理之后，该脚本得以独立运行
 
 #### 初始化
 
