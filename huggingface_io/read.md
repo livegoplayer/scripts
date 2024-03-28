@@ -9,9 +9,10 @@
 `python ./huggingface.py`
 
 ### 说明
+这个脚本用来无梯子接入huggingface， 经过本人以及huggingface-hub开发者的一些debug处理之后，该脚本得以独立运行
 
 #### 初始化
-这个脚本用来无梯子接入huggingface， 经过本人以及huggingface-hub开发者的一些debug处理之后，该脚本得以独立运行
+
 1） 如果你有huggingface账号，你可以在setting中生成一个有写入权限的access_token，然后在程序初始化的时候填入，从而达到使用本脚本管理你的huggingfaca账号的功能
 2） 如果你没有huggingface账号，本脚本的作者使用自己的小号注册了一个access_token，作为默认账号，你在初始化的是偶可以选择，这个小号里面的东西你们可以自由使用。
 3） 以上任意形式的初始化之后你的都不会再触发初始化逻辑，在初始化逻辑之后，你可选择更换账号，更换你要使用的access_token，如果你想要重新走一遍初始化逻辑，你可以本目录下的access_token文件，并且重开脚本
