@@ -1,2 +1,2 @@
 cryptography
-huggingface-hub
+git+https://github.com/huggingface/huggingface_hub@fix-url-for-good-when-using-procy
