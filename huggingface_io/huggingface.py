@@ -53,7 +53,7 @@ def save_access_token(access_token):
         json.dump({"access_token": access_token}, f)
 
 def load_access_token():
-    """加载保存�? AccessToken."""
+    """加载保存的 AccessToken."""
     try:
         with open("access_token.json", "r") as f:
             return json.load(f)["access_token"]
@@ -62,21 +62,21 @@ def load_access_token():
 
 def login(init=False):
 
-    """登录�? Hugging Face 账户. 只有初始化的时候才可以略过登录，直接读取本地文件，其他情况代表手动调用"""
+    """登录到 Hugging Face 账户. 只有初始化的时候才可以略过登录，直接读取本地文件，其他情况代表手动调用"""
     access_token = load_access_token()
     if not (access_token and init):
-        print("检测到你是第一次登录，请选择模式(这个页面只会显示一次，如果想要再次进入请删除脚本目录下的access_token.json)�?")
-        print("1. 登录自己的access_token(可以登录huggingface设置里面新建一个，这样的话管理的就是你自己的账�?)")
-        print("2. 使用公共账号(程序作者使用小号创建的access_token,宗旨是让大家一起管理这个账�?)")
-        choice = input("请输入你的选择�?")
+        print("检测到你是第一次登录，请选择模式(这个页面只会显示一次，如果想要再次进入请删除脚本目录下的access_token.json)：")
+        print("1. 登录自己的access_token(可以登录huggingface设置里面新建一个，这样的话管理的就是你自己的账号)")
+        print("2. 使用公共账号(程序作者使用小号创建的access_token,宗旨是让大家一起管理这个账号)")
+        choice = input("请输入你的选择：")
         if choice == "1":
-            access_token = input("请输入您�? AccessToken: ")
+            access_token = input("请输入您的 AccessToken: ")
             save_access_token(access_token)
         elif choice == "2":
             access_token = get_defalut_access_token()
             save_access_token(access_token)
         else:
-            print("无效的操作编号，请重新输�?")
+            print("无效的操作编号，请重新输入")
 
     access_token = load_access_token()
     subprocess.run(["huggingface-cli", "login", "--token", access_token], capture_output=True, text=True)
@@ -93,7 +93,7 @@ def makesure_login(init=False):
     while True:
         status, res = check_login()
         if status:
-            print(f"登录成功，用户名�?: {res}")
+            print(f"登录成功，用户名为: {res}")
             if api == None:
                 api = HfApi(endpoint=mirror_url, token=load_access_token())
                 user=res
@@ -113,7 +113,7 @@ def check_login():
         return False, result.stderr
 
 def get_start_end_num():
-    """获取 id_mapping 中的最小和最大数�? id."""
+    """获取 id_mapping 中的最小和最大数字 id."""
     global id_mapping
     if not id_mapping:
         return None, None
@@ -123,7 +123,7 @@ def get_start_end_num():
     return min_id, max_id
 
 def list_models():
-    """列出所有模�?."""
+    """列出所有模型."""
     global id_mapping, repo_types
     models = api.list_models(author=user, token=load_access_token())
     print("\nModels:")
@@ -155,7 +155,7 @@ def list_datasets():
 
 
 def get_or_create_id(repo_id):
-    """返回对应 repo_id 的数�? id，如果不存在则创建一个新的数�? id."""
+    """返回对应 repo_id 的数字 id，如果不存在则创建一个新的数字 id."""
     global id_mapping
     if repo_id in id_mapping:
         return id_mapping[repo_id]
@@ -165,7 +165,7 @@ def get_or_create_id(repo_id):
         return new_id
 
 def get_repo_type(repo_id):
-    """根据 repo_id 获取对应�? repo_type."""
+    """根据 repo_id 获取对应的 repo_type."""
     global repo_types, current_project_repo_type
     t =  repo_types.get(repo_id, "unknown") 
     if t == "unknown":
@@ -173,7 +173,7 @@ def get_repo_type(repo_id):
     return t
 
 def list_projects():
-    """列出用户的项目列�?."""
+    """列出用户的项目列表."""
     makesure_login()
     list_all()
     while True:
@@ -184,8 +184,8 @@ def list_projects():
         print("4. 添加一个新项目")
         # print("5. 下载某个项目")
         print("5. 选择一个项目为当前项目")
-        print("6. 返回上一�?")
-        choice = input("请输入操作编�?: ")
+        print("6. 返回上一级")
+        choice = input("请输入操作编号: ")
         
         if choice == "1":
             list_models()
@@ -203,10 +203,10 @@ def list_projects():
         elif choice == "6":
             return  # Return to the previous level
         else:
-            print("无效的操作编号，请重新输�?")
+            print("无效的操作编号，请重新输入")
 
 def list_all():
-    """列出所有模型、数据集和空�?."""
+    """列出所有模型、数据集和空间."""
     list_models()
     list_datasets()
 
@@ -220,7 +220,7 @@ def select_current_project(start_num, end_num):
     """选择一个项目为当前项目."""
     global current_project, id_mapping, current_project_repo_type
     while True:
-        selected_id = input(f"请在 {str(start_num)} - {str(end_num)} 之中选择一个项目编号，或直接输入repo_id作为当前选择的项�?: ")
+        selected_id = input(f"请在 {str(start_num)} - {str(end_num)} 之中选择一个项目编号，或直接输入repo_id作为当前选择的项目: ")
         if selected_id.isdigit() and start_num <= int(selected_id) <= end_num:
             current_project = get_key_by_value(id_mapping, int(selected_id))
             print(f"当前项目: {current_project}")
@@ -230,10 +230,10 @@ def select_current_project(start_num, end_num):
             current_project = selected_id
             print(f"当前项目: {current_project}")
             if not is_own_project(current_project):
-                print("检测到当前项目不是本人的项目，请手动指定库的类�?")
+                print("检测到当前项目不是本人的项目，请手动指定库的类型")
                 print("1. 模型 (Model)")
-                print("2. 数据�? (Dataset)")
-                project_type = input("请输入项目类型编号，直接回车返回上一�?: ")
+                print("2. 数据集 (Dataset)")
+                project_type = input("请输入项目类型编号，直接回车返回上一级: ")
                 if project_type == "":
                     return
                 if project_type == "1":
@@ -241,13 +241,13 @@ def select_current_project(start_num, end_num):
                 elif project_type == "2":
                     repo_type = "dataset"
                 else:
-                    print("无效的项目类型编号，请重新输�?")
+                    print("无效的项目类型编号，请重新输入")
                     return
                 current_project_repo_type = repo_type
             show_project_details()
             break
         else:
-            print("无效的项目编号，请重新选择�?")
+            print("无效的项目编号，请重新选择。")
 
 def show_project_details():
     """显示项目的具体内容，并提供下载和上传文件的选项."""
@@ -272,8 +272,8 @@ def show_project_details():
                 print("1. 下载一个或多个项目文件")
                 print("2. 上传一个或多个项目文件")
                 print("3. 下载整个项目")
-                print("4. 返回上一�?")
-                choice = input("请输入操作编�?: ")
+                print("4. 返回上一级")
+                choice = input("请输入操作编号: ")
                 if choice == "1":
                     download_files(current_project)
                 elif choice == "2":
@@ -283,16 +283,16 @@ def show_project_details():
                 elif choice == "4":
                     return  # Return to the previous level
                 else:
-                    print("无效的操作编号，请重新输入�?")
+                    print("无效的操作编号，请重新输入。")
         except HfHubHTTPError as e:
             print(f"获取项目详情失败: {e}")
     else:
-        print("未选择任何项目�?")
+        print("未选择任何项目。")
 
 
 
 def format_size(size):
-    """将文件大小格式化为更易读的形�?."""
+    """将文件大小格式化为更易读的形式."""
     power = 2**10
     n = 0
     power_labels = {0: '', 1: 'K', 2: 'M', 3: 'G', 4: 'T'}
@@ -302,7 +302,7 @@ def format_size(size):
     return f"{size:.2f} {power_labels[n]}B"
 
 def print_tree(repo_id, path=None, expand=False, revision=None, repo_type=None, indent=""):
-    """以树状形式打印项目文件结�?."""
+    """以树状形式打印项目文件结构."""
     global api
     if path is None:
         path = ''
@@ -325,7 +325,7 @@ def save_last_folder(folder_path):
     """
     if not os.path.exists(folder_path):
         os.makedirs(folder_path, exist_ok=True)
-        print(f"文件�? '{folder_path}' 不存在，已创建�?")
+        print(f"文件夹 '{folder_path}' 不存在，已创建。")
 
     config = {"last_folder": folder_path}
     with open("config.json", "w") as f:
@@ -349,12 +349,12 @@ def download_files(repo_id):
     while True:
         default_folder = get_default_folder()
 
-        print("\n请输入要下载的文件路径，多个文件请使用逗号分隔, 回车返回上一�?")
-        file_paths_input = input("请输入文件路�?: ")
+        print("\n请输入要下载的文件路径，多个文件请使用逗号分隔, 回车返回上一级")
+        file_paths_input = input("请输入文件路径: ")
         if len(file_paths_input) == 0:
             return
         
-        folder_path = input(f"请输入本地文件夹路径，按回车使用{default_folder}�?")
+        folder_path = input(f"请输入本地文件夹路径，按回车使用{default_folder}：")
 
         if folder_path == "":
             folder_path = default_folder
@@ -365,7 +365,7 @@ def download_files(repo_id):
         total_files += len(file_paths)
 
         # Prompt user to place downloaded files in corresponding folders
-        user_choice = input("是否把下载的文件放到对应的文件夹�?(Y/n)�?")
+        user_choice = input("是否把下载的文件放到对应的文件夹？(Y/n)：")
         dir_obj = False
         if user_choice.lower() != 'n':
             dir_obj = True
@@ -391,9 +391,9 @@ def download_files(repo_id):
                 print(f"下载文件 '{filename}' 时出错：{e}")
                 failed_downloads += 1
 
-        print(f"\n总共下载文件�?: {total_files}")
-        print(f"成功下载文件�?: {successful_downloads}")
-        print(f"失败下载文件�?: {failed_downloads}")
+        print(f"\n总共下载文件数: {total_files}")
+        print(f"成功下载文件数: {successful_downloads}")
+        print(f"失败下载文件数: {failed_downloads}")
 
 import os
 
@@ -402,15 +402,15 @@ def upload_files(repo_id):
     global api
     makesure_login()
     if not is_own_project(repo_id):
-        print("检测到当前项目不是本人的项目，故而没有上传权�?")
+        print("检测到当前项目不是本人的项目，故而没有上传权限")
         return
     while True:
-        file_paths_input = input("请输入要上传的文件路�?(多个文件请用逗号分隔), 回车返回上一�?: ")
+        file_paths_input = input("请输入要上传的文件路径(多个文件请用逗号分隔), 回车返回上一级: ")
         if len(file_paths_input) == 0:
             return
         file_paths = [path.strip() for path in file_paths_input.split(",")]
 
-        relative_paths_input = input("请输入要上传的文件相对路�?, 没有会自动创建，不填全部上传到根目录(多个路径请用逗号分隔): ")
+        relative_paths_input = input("请输入要上传的文件相对路径, 没有会自动创建，不填全部上传到根目录(多个路径请用逗号分隔): ")
         if len(relative_paths_input) == 0:
             relative_paths = [""]
         else:
@@ -432,18 +432,18 @@ def upload_files(repo_id):
         now = datetime.now()
         current_time = now.strftime("%Y-%m-%d %H:%M:%S")
         default_message = f"{user_id} uploaded at {current_time}"
-        commit_message = input(f"请输入本次提交的目的�?(回车默认填写:{default_message}):")
+        commit_message = input(f"请输入本次提交的目的，(回车默认填写:{default_message}):")
 
         for file_path, relative_path in zip(file_paths, relative_paths):
             # Convert relative path to absolute path
             absolute_path = os.path.abspath(file_path)
             if not os.path.exists(file_path):
-                print(f"文件 '{file_path}' 不存在，跳过上传�?")
+                print(f"文件 '{file_path}' 不存在，跳过上传。")
                 continue
 
             try:
 
-                # 构�? commit_message
+                # 构造 commit_message
                 if len(commit_message) == 0: 
                     commit_message = default_message
                 else: 
@@ -458,7 +458,7 @@ def upload_files(repo_id):
                 # os.environ['HF_ENDPOINT'] = ''
 
                 api.upload_file(repo_id=repo_id, path_or_fileobj=absolute_path, path_in_repo=relative_path + "/"  + file_name, commit_message=commit_message, token=load_access_token(), repo_type=get_repo_type(current_project))
-                print(f"文件 {file_path} 上传成功�?")
+                print(f"文件 {file_path} 上传成功。")
             except HfHubHTTPError as e:
                 print(f"文件 {file_path} 上传失败: {e}")
             except ValueError as e:
@@ -483,26 +483,26 @@ def create_repository():
         """添加一个新项目."""
         print("\n请选择要创建的项目类型:")
         print("1. 模型 (Model)")
-        print("2. 数据�? (Dataset)")
-        project_type = input("请输入项目类型编号，直接回车返回上一�?: ")
+        print("2. 数据集 (Dataset)")
+        project_type = input("请输入项目类型编号，直接回车返回上一级: ")
         if project_type == "":
             return
         
         if project_type == "1":
             repo_type = None
-            project_name = input("请输入模型名�?, 直接回车返回上一�?: ")
+            project_name = input("请输入模型名称, 直接回车返回上一级: ")
         elif project_type == "2":
             repo_type = "dataset"
-            project_name = input("请输入数据集名称, 直接回车返回上一�?: ")
+            project_name = input("请输入数据集名称, 直接回车返回上一级: ")
         else:
-            print("无效的项目类型编号，请重新输�?")
+            print("无效的项目类型编号，请重新输入")
             return
 
         if project_name == "":
             return
 
-        private = input("是否为私有库�? 请输�? y �? n: ") == "y"
-        # 创建存储�?
+        private = input("是否为私有库， 请输入 y 或 n: ") == "y"
+        # 创建存储库
         api.create_repo(project_name, private=private, repo_type=repo_type, token=load_access_token())
 
     except HfHubHTTPError as e:
@@ -524,15 +524,15 @@ def create_repository():
     if not private:
         url = mirror_url + "/" + repo_id
     else:
-        url = "https://huggingface.co" + "/" + repo_id + " " + "(私有存储库无法在镜像站点上显�?)"
+        url = "https://huggingface.co" + "/" + repo_id + " " + "(私有存储库无法在镜像站点上显示)"
     # 检查是否成功创建存储库
     if url:
-        print(f"存储�? {repo_id} 创建成功！地址为：" + url)
+        print(f"存储库 {repo_id} 创建成功！地址为：" + url)
         id = get_or_create_id(repo_id)
         id_mapping[repo_id] = id
         repo_types[repo_id] = repo_type
     else:
-        print("存储库创建失败，请检查权限或存储库是否已存在�?")
+        print("存储库创建失败，请检查权限或存储库是否已存在。")
     return repo_id
 
 def extract_first_three_digits(s):
@@ -551,7 +551,7 @@ def download_project(repo_id):
     # Your code to download a project goes here
     default_folder = get_default_folder()
 
-    folder_path = input(f"请输入文件夹路径，按回车使用{default_folder}(会自动给你创建项目名�?)�?")
+    folder_path = input(f"请输入文件夹路径，按回车使用{default_folder}(会自动给你创建项目名称)：")
     if folder_path == "":
         folder_path = default_folder
     
@@ -563,7 +563,7 @@ def switch_account():
     """切换账户."""
     access_token = input("请输入您的新 AccessToken: ")
     save_access_token(access_token)
-    makesure_login()  # 切换账户后立即登�?
+    makesure_login()  # 切换账户后立即登录
 
 def main():
     makesure_login(True)
@@ -571,15 +571,13 @@ def main():
         print("\n请选择操作:")
         print("1. 查看项目列表")
         print("2. 切换账户")
-        choice = input("请输入操作编�?: ")
+        choice = input("请输入操作编号: ")
         if choice == "1":
             list_projects()
         elif choice == "2":
             switch_account()
         else:
-            print("无效的操作编号，请重新输�?")
+            print("无效的操作编号，请重新输入")
 
 if __name__ == "__main__":
     main()
-
-
