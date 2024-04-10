@@ -1,1 +1,1 @@
-python .\horizontal_flip.py F:\Desktop\imgs\雪夜
+python .\horizontal_flip.py F:\Desktop\imgs\苗族少女
