@@ -1,1 +1,1 @@
-python .\horizontal_flip.py F:\Desktop\imgs\苗族少女
+python .\horizontal_flip.py F:\Desktop\imgs\仙侠\魔法\20_blue

@@ -2,8 +2,8 @@ import os
 
 mirror_url = "https://hf-mirror.com"
 os.environ['HF_ENDPOINT'] = mirror_url
-os.environ['NO_PROXY'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16, mirrors.cloud.aliyuncs.com, hf-mirror.com, lfs.huggingface.co, .s3-accelerate.amazonaws.com, .hf-mirror.com'
-os.environ['no_proxy'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16, mirrors.cloud.aliyuncs.com, hf-mirror.com, lfs.huggingface.co, .s3-accelerate.amazonaws.com, .hf-mirror.com'
+os.environ['NO_PROXY'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16, mirrors.cloud.aliyuncs.com, hf-mirror.com, lfs.huggingface.co, .amazonaws.com, .hf-mirror.com, .s3-accelerate.amazonaws.com'
+os.environ['no_proxy'] = 'localhost, 127.0.0.1, ::1, ip.cn, chinaz.com, 192.168.0.0/16, mirrors.cloud.aliyuncs.com, hf-mirror.com, lfs.huggingface.co, .amazonaws.com, .hf-mirror.com, .s3-accelerate.amazonaws.com'
 os.environ["HTTP_PROXY"] = ""
 os.environ["HTTPS_PROXY"] = ""
 os.environ["http_proxy"] = ""
@@ -366,9 +366,9 @@ def download_files(repo_id):
 
         # Prompt user to place downloaded files in corresponding folders
         user_choice = input("是否把下载的文件放到对应的文件夹？(Y/n)：")
-        dir_obj = False
-        if user_choice.lower() != 'n':
-            dir_obj = True
+        dir_obj = True
+        if user_choice == 'n':
+            dir_obj = False
 
         for file_path in file_paths:
             # Extract filename and subfolder from file_path
@@ -382,8 +382,8 @@ def download_files(repo_id):
 
             try:
                 path_input = folder_path
-                if dir_obj:
-                    path_input = folder_path + "/" + subfolder
+                if not dir_obj:
+                    subfolder = ""
                 print(f'downloading {filename} to {path_input}...')
                 api.hf_hub_download(repo_id=repo_id, filename=filename, subfolder=subfolder, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project))
                 successful_downloads += 1
