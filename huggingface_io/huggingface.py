@@ -395,11 +395,6 @@ def download_files(repo_id):
                 
                 print(f'downloading {filename} to {path_input}...')
 
-                print(subfolder)
-                print(filename)
-                print(file_path)
-                print(parts)
-
                 if force_download:
                     api.hf_hub_download(repo_id=repo_id, filename=filename, subfolder=subfolder, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project), force_download=True, resume_download=False)
                 else:
