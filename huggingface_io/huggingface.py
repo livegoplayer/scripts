@@ -380,6 +380,7 @@ def download_files(repo_id):
                 filename = file_path
                 subfolder = ""
 
+            force_download = False
             if failed_downloads > 0:
                 user_choice = input("检测到曾经下载错误，是否启用强制下载(Y/n)：")
                 if user_choice == 'n':
