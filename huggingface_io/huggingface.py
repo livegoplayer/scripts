@@ -380,12 +380,22 @@ def download_files(repo_id):
                 filename = file_path
                 subfolder = ""
 
+            if failed_downloads > 0:
+                user_choice = input("检测到曾经下载错误，是否启用强制下载(Y/n)：")
+                if user_choice == 'n':
+                    force_download = False
+                else: 
+                    force_download = True
+
             try:
                 path_input = folder_path
                 if not dir_obj:
                     subfolder = ""
                 print(f'downloading {filename} to {path_input}...')
-                api.hf_hub_download(repo_id=repo_id, filename=filename, subfolder=subfolder, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project))
+                if force_download:
+                    api.hf_hub_download(repo_id=repo_id, filename=filename, subfolder=subfolder, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project), force_download=True, resume_download=False)
+                else:
+                    api.hf_hub_download(repo_id=repo_id, filename=filename, subfolder=subfolder, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project))
                 successful_downloads += 1
             except Exception as e:
                 print(f"下载文件 '{filename}' 时出错：{e}")
