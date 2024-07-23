@@ -398,7 +398,7 @@ def download_files(repo_id):
                 if force_download:
                     api.hf_hub_download(repo_id=repo_id, filename=filename, subfolder=subfolder, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project), force_download=True, resume_download=False)
                 else:
-                    api.hf_hub_download(repo_id=repo_id, filename=filename, subfolder=subfolder, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project))
+                    api.hf_hub_download(repo_id=repo_id, filename=filename, subfolder=subfolder, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project), resume_download=True)
                 successful_downloads += 1
             except Exception as e:
                 print(f"下载文件 '{filename}' 时出错：{e}")
@@ -418,7 +418,7 @@ def upload_files(repo_id):
         print("检测到当前项目不是本人的项目，故而没有上传权限")
         return
     while True:
-        file_paths_input = input("请输入要上传的文件路径(多个文件请用逗号分隔), 回车返回上一级: ")
+        file_paths_input = input("请输入要上传的文件路径(多个文件请用逗号分隔,可以上传文件夹), 回车返回上一级: ")
         if len(file_paths_input) == 0:
             return
         file_paths = [path.strip() for path in file_paths_input.split(",")]
@@ -451,7 +451,7 @@ def upload_files(repo_id):
             # Convert relative path to absolute path
             absolute_path = os.path.abspath(file_path)
             if not os.path.exists(file_path):
-                print(f"文件 '{file_path}' 不存在，跳过上传。")
+                print(f"资源 '{file_path}' 不存在，跳过上传。")
                 continue
 
             try:
@@ -461,25 +461,34 @@ def upload_files(repo_id):
                     commit_message = default_message
                 else: 
                     commit_message = f"{user_id}: " + commit_message
-                file_name = os.path.basename(file_path)
-                print(f'uploading {absolute_path} to {repo_id}/{relative_path}/{file_name}...')
-                #huggingface-cli upload --token hf_*** username/reponame . .
-                # os.environ['HF_ENDPOINT'] = mirror_url
-                # access_token = load_access_token()
-                # res = subprocess.run(["huggingface-cli", "upload", f"--token={access_token}",f"{repo_id}", f"{absolute_path}", f"{relative_path+'/'+file_name}", f"--commit-message=\'{commit_message}\'", f"--repo-type={get_repo_type(current_project)}"], capture_output=True, text=True)
-                # print(res)
-                # os.environ['HF_ENDPOINT'] = ''
 
-                api.upload_file(repo_id=repo_id, path_or_fileobj=absolute_path, path_in_repo=relative_path + "/"  + file_name, commit_message=commit_message, token=load_access_token(), repo_type=get_repo_type(current_project))
-                print(f"文件 {file_path} 上传成功。")
+                if os.path.isfile(file_path):
+                    file_name = os.path.basename(file_path)
+                    print(f'uploading file {absolute_path} to {repo_id}/{relative_path}/{file_name}...')
+                    api.upload_file(repo_id=repo_id, path_or_fileobj=absolute_path, path_in_repo=relative_path + "/"  + file_name, commit_message=commit_message, token=load_access_token(), repo_type=get_repo_type(current_project))
+                    print(f"文件 {file_path} 上传成功。")
+                elif os.path.isdir(file_path):
+                    folder_name = os.path.basename(file_path)
+                    print(f'uploading folder {path} to {repo_id}/{relative_path}/{folder_name}...')
+                    api.upload_folder(
+                        folder_path=absolute_path,
+                        repo_id=repo_id,
+                        repo_type=get_repo_type(current_project),
+                        multi_commits=True,
+                        multi_commits_verbose=True,
+                        path_in_repo=relative_path + "/"  + folder_name,
+                        commit_message=commit_message, 
+                        token=load_access_token()
+                    )
+
             except HfHubHTTPError as e:
-                print(f"文件 {file_path} 上传失败: {e}")
+                print(f"资源 {file_path} 上传失败: {e}")
             except ValueError as e:
-                print(f"文件 {file_path} 上传失败: {e}")
+                print(f"资源 {file_path} 上传失败: {e}")
             except RepositoryNotFoundError as e:
-                print(f"文件 {file_path} 上传失败: {e}")
+                print(f"资源 {file_path} 上传失败: {e}")
             except RevisionNotFoundError as e:
-                print(f"文件 {file_path} 上传失败: {e}")
+                print(f"资源 {file_path} 上传失败: {e}")
 
         break
 
@@ -570,7 +579,7 @@ def download_project(repo_id):
     
     save_last_folder(folder_path)
     path_input = folder_path + "/" + repo_id.split('/')[-1]
-    api.snapshot_download(repo_id=repo_id, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project))
+    api.snapshot_download(repo_id=repo_id, local_dir=path_input, local_dir_use_symlinks=False, token=load_access_token(), repo_type=get_repo_type(current_project), resume_download=True)
 
 def switch_account():
     """切换账户."""
