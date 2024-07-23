@@ -36,9 +36,10 @@ def translate_text(text, source='en', target='zh'):
         print(f"{RED}Translation failed: {err}{RESET}")
         return None
 
-# 替换原文中的逗号为英文逗号，并确保逗号后有一个且仅有一个空格
+# 替换原文中的逗号为英文逗号，并确保逗号后有一个且仅有一个空�?
 def replace_commas(text):
     text = text.replace('，', ',')
+    text = text.replace('、', ',')
     text = re.sub(r',(\s+)', ',', text)
     return text.strip()
 
