@@ -1,0 +1,17 @@
+依赖安装方式：
+
+pip install -r requirements.txt
+
+如果遇到网络错误，请自行下载安装
+
+https://pypi.org/project/tencentcloud-sdk-python/#files
+
+文件下载后直接
+
+pip install tencentcloud_sdk_python-3.0.1195-py2.py3-none-any.whl 
+
+使用脚本：
+
+python translate_ch.py /path/to/your/txt_files_directory
+
+上传的腾讯接口apikey 已经改动，不可使用，请自己申请，然后替换过去
